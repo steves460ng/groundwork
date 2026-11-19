@@ -17,7 +17,7 @@ When you build alone, basics like CI, consistent checks, and working rules tend 
 - Check output is short, and CI results come back as failures only
 - Full test runs are left to CI; Claude runs only the related tests
 - Files that never need reading are blocked by permissions, and formatting is handled by hooks
-- Work continues through short sessions and a notes file, so conversations don't pile up
+- A notes file carries context across sessions in a few lines
 
 This can also cut token usage. How much depends on the project and your habits, so treat it as a bonus.
 
@@ -30,14 +30,16 @@ Run `/groundwork` and Claude asks you questions one at a time: seven at most, ea
 | Output | Purpose |
 |---|---|
 | Quiet check command | Format → lint → types → tests. Prints one line on success; on failure, only `file:line` and the error. Pass a path to run only related tests |
-| `ci-status` command | Fetches CI results for the current branch and shows only the failing part, up to 40 lines. No more pasting logs |
+| CI result check | Uses whatever actually works in your environment (GitHub MCP tools or a `ci-status` command) to fetch only the failing part. No more pasting logs |
 | `.claude/settings.json` + hooks | Blocks reading lock files and build output, blocks running test runners directly, auto-formats after edits |
-| `.claude/notes.md` | Work notes, 20 lines max. Updated when a session ends; new sessions read only this to pick up |
-| `CLAUDE.md` | 60 lines max. One task per session, use only the check command, verify with `ci-status` after pushing, and so on |
+| `.claude/notes.md` | Work notes, 20 lines max. Skipped if the repository already has a handoff document such as HANDOFF |
+| `CLAUDE.md` | 60 lines max. Use only the check command, check CI results after pushing, read the handoff notes first (recommended), and so on |
 | `CONTEXT.md` + generator script | Optional, for larger projects. Holds only what a script can extract reliably: structure, entry points, exported names |
 | `ci.yml` | Full checks run in CI. Docs-only changes are skipped |
 
 It never adds tools or dependencies you weren't asked about. Run it again on an already set-up repository and it asks only about what changed, showing a diff before touching existing files.
+
+It also works on repositories that already have code. In that case it first reviews each output as "add as is / add with changes / skip" and builds only what you pick. Existing handoff docs, test commands, and formatting policies take priority.
 
 ## Usage
 
