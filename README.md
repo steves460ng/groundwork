@@ -21,9 +21,3 @@
 | `.template/MANIFEST` | 새 저장소에서 정리할 템플릿 전용 파일 목록 |
 | `.template/check.py` | 스킬 형식 검사 (Python 표준 라이브러리만 사용) |
 | `.github/workflows/skill-check.yml` | 스킬이 바뀔 때 검사를 돌리는 CI. 이 원본 저장소에서만 실행 |
-
-## 유지보수
-
-- 스킬을 고친 뒤 `python3 .template/check.py`로 검사합니다. 성공하면 한 줄만 출력됩니다.
-- 템플릿 전용 파일을 추가하면 `.template/MANIFEST`에도 적습니다.
-- 이 저장소의 스킬과 claude.ai 계정에 저장된 스킬은 자동으로 동기화되지 않습니다. 한쪽을 고치면 다른 쪽도 맞춰 주세요. 둘 다 있으면 세션에 스킬이 두 번 보일 수 있으니 하나만 쓰는 편이 좋습니다.
