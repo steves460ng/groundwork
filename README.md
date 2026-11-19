@@ -1,56 +1,60 @@
 # groundwork
 
-Claude Code와 함께 개발하기 좋은 프로젝트 기본 세팅(CI, 검사 명령, 작업 규칙)을 새 저장소에 한 번에 깔아 주는 스킬과, 그 스킬을 담은 GitHub 템플릿 저장소입니다.
+**English** | [한국어](README.ko.md)
 
-## 왜 만들었나
+A Claude Code skill that sets up a project baseline (CI, a check command, and working rules) for a new repository in one go, packaged as a GitHub template repository.
 
-혼자 개발하면 CI, 일관된 검사, 작업 규칙 같은 기본기를 "나중에" 하다가 끝내 안 하게 되기 쉽습니다. groundwork는 이것을 프로젝트 첫날 깔아 줍니다.
+## Why
 
-**기본 효과: 프로젝트의 기본기**
-- push와 PR마다 CI가 같은 검사를 똑같이 돌려 회귀를 잡습니다
-- 검사 명령 하나로 포맷, lint, 타입, 테스트를 한 번에 확인합니다
-- 리팩터링이나 Claude가 만든 변경을 안심하고 머지할 수 있습니다
+When you build alone, basics like CI, consistent checks, and working rules tend to get pushed to "later" and never happen. groundwork puts them in place on day one.
 
-**덧붙는 효과: Claude Code가 덜 헤매는 구조**
-- 검사 출력이 짧고, CI 결과도 실패 부분만 가져옵니다
-- 전체 테스트는 CI에 맡기고 Claude는 관련 테스트만 돌립니다
-- 읽을 필요 없는 파일은 권한으로 막고, 포맷은 훅이 처리합니다
-- 짧은 세션과 작업 노트로 이어 가서 대화가 길게 쌓이지 않습니다
+**Main benefit: solid project basics**
+- CI runs the same checks on every push and PR, so regressions get caught
+- A single check command runs format, lint, type, and test checks
+- You can merge refactors and Claude-made changes with confidence
 
-그 결과로 토큰 사용도 줄어들 수 있습니다. 다만 절감 폭은 프로젝트와 작업 습관에 따라 다르니 보너스로 생각해 주세요.
+**Side benefit: a structure where Claude Code wastes less effort**
+- Check output is short, and CI results come back as failures only
+- Full test runs are left to CI; Claude runs only the related tests
+- Files that never need reading are blocked by permissions, and formatting is handled by hooks
+- Work continues through short sessions and a notes file, so conversations don't pile up
 
-세팅 자체에도 시간과 토큰이 들기 때문에 **오래 쓸 프로젝트**에 맞습니다. 며칠 쓰고 버릴 실험용 저장소에는 권하지 않습니다.
+This can also cut token usage. How much depends on the project and your habits, so treat it as a bonus.
 
-## 무엇을 해 주나
+Setup itself takes time and tokens, so groundwork suits **long-lived projects**. It isn't recommended for throwaway repositories you'll use for a few days.
 
-`/groundwork`를 실행하면 Claude가 질문을 하나씩 합니다. 7개를 넘지 않고, 질문마다 추천값이 있습니다. 답이 끝나면 아래 파일을 만들고, 검사와 훅이 제대로 동작하는지 확인한 뒤 PR을 올립니다.
+## What it does
 
-| 생성물 | 역할 |
+Run `/groundwork` and Claude asks you questions one at a time: seven at most, each with a recommended default. When you're done, it creates the files below, verifies that the checks and hooks work, and opens a PR.
+
+| Output | Purpose |
 |---|---|
-| 조용한 검사 명령 | 포맷 → lint → 타입 → 테스트. 성공하면 한 줄만, 실패하면 `파일:라인`과 에러만 출력. 경로를 주면 관련 테스트만 실행 |
-| `ci-status` 명령 | 현재 브랜치의 CI 결과를 가져와 실패 부분만 최대 40줄로 보여 줌. 로그를 직접 붙여 넣지 않아도 됨 |
-| `.claude/settings.json` + 훅 | lock 파일·빌드 산출물 읽기 차단, 테스트 러너 직접 실행 차단, 파일 수정 후 자동 포맷 |
-| `.claude/notes.md` | 20줄 이하 작업 노트. 세션을 끝낼 때 갱신하고, 새 세션은 이것만 읽고 이어서 시작 |
-| `CLAUDE.md` | 60줄 이하. 세션 하나에 작업 하나, 검사 명령만 사용, push 후 `ci-status`로 확인 등 |
-| `CONTEXT.md` + 생성 스크립트 | 큰 프로젝트에서만 선택. 구조, 진입점, 내보내는 이름처럼 스크립트로 정확히 뽑을 수 있는 것만 담음 |
-| `ci.yml` | 전체 검사는 CI에서. 문서만 바뀐 변경은 건너뜀 |
+| Quiet check command | Format → lint → types → tests. Prints one line on success; on failure, only `file:line` and the error. Pass a path to run only related tests |
+| `ci-status` command | Fetches CI results for the current branch and shows only the failing part, up to 40 lines. No more pasting logs |
+| `.claude/settings.json` + hooks | Blocks reading lock files and build output, blocks running test runners directly, auto-formats after edits |
+| `.claude/notes.md` | Work notes, 20 lines max. Updated when a session ends; new sessions read only this to pick up |
+| `CLAUDE.md` | 60 lines max. One task per session, use only the check command, verify with `ci-status` after pushing, and so on |
+| `CONTEXT.md` + generator script | Optional, for larger projects. Holds only what a script can extract reliably: structure, entry points, exported names |
+| `ci.yml` | Full checks run in CI. Docs-only changes are skipped |
 
-질문하지 않은 도구나 의존성은 추가하지 않습니다. 이미 설정된 저장소에서 다시 실행하면 바뀐 항목만 묻고, 기존 파일은 덮어쓰기 전에 diff를 보여 줍니다.
+It never adds tools or dependencies you weren't asked about. Run it again on an already set-up repository and it asks only about what changed, showing a diff before touching existing files.
 
-## 사용법
+## Usage
 
-1. 이 저장소 페이지에서 **Use this template → Create a new repository**를 누릅니다.
-2. 새 저장소로 웹 Claude Code 세션을 엽니다.
-3. `/groundwork`를 실행하고 질문에 답합니다.
-4. Claude가 올린 PR을 확인하고 머지합니다.
+1. On this repository's page, click **Use this template → Create a new repository**.
+2. Open a Claude Code on the web session for the new repository.
+3. Run `/groundwork` and answer the questions.
+4. Review and merge the PR Claude opens.
 
-세팅이 끝나면 템플릿 전용 파일(`.template/`, `.github/workflows/skill-check.yml`)은 삭제되고, 이 README는 새 프로젝트용으로 바뀝니다. `.claude/skills/groundwork/`는 나중에 다시 실행할 수 있도록 남습니다.
+After setup, the template-only files (`.template/`, `.github/workflows/skill-check.yml`, `README.ko.md`) are removed and this README is rewritten for the new project. `.claude/skills/groundwork/` stays so you can run it again later.
 
-## 구성
+> The skill instructions are written in Korean, but Claude replies in the language you use. If it doesn't, just ask it to use English.
 
-| 경로 | 역할 |
+## Contents
+
+| Path | Purpose |
 |---|---|
-| `.claude/skills/groundwork/SKILL.md` | 스킬 본문 |
-| `.template/MANIFEST` | 새 저장소에서 정리할 템플릿 전용 파일 목록 |
-| `.template/check.py` | 스킬 형식 검사 (Python 표준 라이브러리만 사용) |
-| `.github/workflows/skill-check.yml` | 스킬이 바뀔 때 검사를 돌리는 CI. 이 원본 저장소에서만 실행 |
+| `.claude/skills/groundwork/SKILL.md` | The skill itself |
+| `.template/MANIFEST` | Template-only files to clean up in new repositories |
+| `.template/check.py` | Skill format checker (Python standard library only) |
+| `.github/workflows/skill-check.yml` | CI that checks the skill when it changes. Runs only in this origin repository |
