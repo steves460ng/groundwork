@@ -8,3 +8,4 @@ delete .template/
 delete .github/workflows/skill-check.yml
 delete README.ko.md
 replace README.md
+replace CLAUDE.md

@@ -33,7 +33,7 @@ Claude Code와 함께 개발하기 좋은 프로젝트 기본 세팅(CI, 검사 
 | CI 결과 확인 | 환경에서 실제로 되는 수단(GitHub MCP 도구 또는 `ci-status` 명령)으로 실패 부분만 가져옴. 로그를 직접 붙여 넣지 않아도 됨 |
 | `.claude/settings.json` + 훅 | lock 파일·빌드 산출물 읽기 차단, 테스트 러너 직접 실행 차단, 파일 수정 후 자동 포맷 |
 | `.claude/notes.md` | 20줄 이하 작업 노트. 이미 HANDOFF 같은 인수인계 문서가 있으면 만들지 않고 그것을 씀 |
-| `CLAUDE.md` | 60줄 이하. 검사 명령만 사용, push 후 CI 결과 확인, 인수인계 문서 읽고 시작하기(권장) 등 |
+| `CLAUDE.md` | 60줄 이하. 검사 명령만 사용, push 후 CI 결과 확인, 브랜치에서 작업하고 PR은 승인받은 뒤 병합, 인수인계 문서 읽고 시작하기(권장) 등 |
 | `CONTEXT.md` + 생성 스크립트 | 큰 프로젝트에서만 선택. 구조, 진입점, 내보내는 이름처럼 스크립트로 정확히 뽑을 수 있는 것만 담음 |
 | `ci.yml` | 전체 검사는 CI에서. 문서만 바뀐 변경은 건너뜀 |
 
@@ -44,17 +44,18 @@ Claude Code와 함께 개발하기 좋은 프로젝트 기본 세팅(CI, 검사 
 ## 사용법
 
 1. 이 저장소 페이지에서 **Use this template → Create a new repository**를 누릅니다.
-2. 새 저장소로 웹 Claude Code 세션을 엽니다.
+2. 새 저장소로 웹 Claude Code 세션을 엽니다. 세팅 전에 변경 요청을 하면 Claude가 먼저 `/groundwork` 실행을 제안합니다.
 3. `/groundwork`를 실행하고 질문에 답합니다.
 4. Claude가 올린 PR을 확인하고 머지합니다.
 
-세팅이 끝나면 템플릿 전용 파일(`.template/`, `.github/workflows/skill-check.yml`, `README.ko.md`)은 삭제되고, 이 README는 새 프로젝트용으로 바뀝니다. `.claude/skills/groundwork/`는 나중에 다시 실행할 수 있도록 남습니다.
+세팅이 끝나면 템플릿 전용 파일(`.template/`, `.github/workflows/skill-check.yml`, `README.ko.md`)은 삭제되고, 이 README와 `CLAUDE.md`는 새 프로젝트용으로 바뀝니다. `.claude/skills/groundwork/`는 나중에 다시 실행할 수 있도록 남습니다.
 
 ## 구성
 
 | 경로 | 역할 |
 |---|---|
 | `.claude/skills/groundwork/SKILL.md` | 스킬 본문 |
+| `CLAUDE.md` | 템플릿으로 만든 저장소용 임시 규칙. 첫 변경 요청 전에 `/groundwork` 실행을 한 번 제안하고, 브랜치 작업과 승인 후 병합을 지키게 한다. 세팅할 때 교체됨 |
 | `.template/MANIFEST` | 새 저장소에서 정리할 템플릿 전용 파일 목록 |
 | `.template/check.py` | 스킬 형식 검사 (Python 표준 라이브러리만 사용) |
 | `.github/workflows/skill-check.yml` | 스킬이 바뀔 때 검사를 돌리는 CI. 이 원본 저장소에서만 실행 |
