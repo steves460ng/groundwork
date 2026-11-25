@@ -94,6 +94,18 @@ For each file, show:
 
 Write each test file after showing it. Ask the user before writing if there are more than 5 files.
 
+### Step 7: Run the new tests
+
+Check command: `none`
+
+(groundwork replaces `none` above with this project's quiet check command during setup.)
+
+- If the check command is `none`, skip this step and say in the output that the tests were written but not run.
+- Otherwise, after writing each test file, run the check command with that test file's path, e.g. `npm run check tests/foo.test.ts`. Do not run test runners directly.
+- If it fails, fix the test file and run it again, at most 2 times. If it still fails, stop and report the output the check command printed.
+- If the failure looks like a bug in the source code, report it. Do not change the source code or weaken the test to make it pass.
+- Add a `**Check**: passed / failed / not run` line to each generated file's output.
+
 ## Example Usage
 
 ```

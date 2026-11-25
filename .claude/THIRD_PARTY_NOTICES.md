@@ -11,7 +11,12 @@
 | `.claude/commands/generate-tests.md` | `commands/generate-tests.md` |
 | `.claude/agents/test-writer.md` | `agents/test-writer.md` |
 
-변경 사항: 파일 내용은 원본 그대로다. 원본의 PostToolUse 훅(`hooks/hooks.json`)은 모든 파일 수정에 끼어들고 이 저장소를 쓰는 모든 사람의 로컬 세션에서도 실행되므로 가져오지 않았다.
+변경 사항:
+- `auto-test/SKILL.md`: description과 활성 조건을 좁혔다. 테스트 없는 새 소스 파일이 생겼을 때와 사용자가 테스트 방법을 물을 때만 한 번 제안한다.
+- `generate-tests.md`: 7단계를 추가했다. 쓴 테스트 파일을 프로젝트의 조용한 검사 명령으로 실행해 확인한다. 검사 명령은 groundwork 세팅 때 채운다.
+- `test-writer.md`: 직접 테스트를 실행할 수 없고 호출한 쪽이 검사한다는 안내를 6단계에 추가했다.
+- groundwork 세팅 때 인터뷰 답에 따라 일부 또는 전부를 삭제할 수 있다.
+- 원본의 PostToolUse 훅(`hooks/hooks.json`)은 모든 파일 수정에 끼어들고 이 저장소를 쓰는 모든 사람의 로컬 세션에서도 실행되므로 가져오지 않았다.
 
 ```
 MIT License

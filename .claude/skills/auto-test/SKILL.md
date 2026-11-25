@@ -1,6 +1,6 @@
 ---
 name: auto-test
-description: This skill should be used when the user writes new code, creates a new file, adds a new function or method, asks about testing, mentions "test", "spec", "coverage", or "TDD", or when source files are created/edited that don't have corresponding test files.
+description: Use only when a new source file with public functions has just been created and no corresponding test file exists, or when the user asks how to test something. Suggest tests once; do not write them without approval.
 version: 1.1.0
 ---
 
@@ -11,16 +11,14 @@ This skill automatically suggests test generation when new code is written or mo
 ## When This Skill Applies
 
 Activate when:
-- The user creates a new source file (not a test file)
-- The user adds a new public function or method to an existing file
+- A new source file (not a test file) with public functions has just been created and has no corresponding test file
 - The user asks "how should I test this?" or similar
-- The user mentions TDD, test coverage, or testing strategy
-- A source file is modified that has no corresponding test file
 
 Do NOT activate when:
 - The user is editing a test file
 - The user is writing configuration, documentation, or migrations
 - The user explicitly says they don't want tests
+- You already suggested tests for the same file in this session
 
 ## Behavior
 
