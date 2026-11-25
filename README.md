@@ -57,6 +57,8 @@ After setup, the template-only files (`.template/`, `.github/workflows/skill-che
 | Path | Purpose |
 |---|---|
 | `.claude/skills/groundwork/SKILL.md` | The skill itself |
+| `.claude/skills/auto-test/`, `.claude/commands/generate-tests.md`, `.claude/agents/test-writer.md` | Test generation tools. Suggests tests for code that has none, and `/generate-tests <path>` writes test files. Taken from [test-generator](https://github.com/a-abdellatif98/test-generator) (MIT) without its hook. Kept in new repositories |
+| `.claude/THIRD_PARTY_NOTICES.md` | Source and license of the imported files |
 | `CLAUDE.md` | Temporary rules for repositories created from the template: suggests running `/groundwork` once before the first change, and keeps work on branches with merges only on your approval. Replaced during setup |
 | `.template/MANIFEST` | Template-only files to clean up in new repositories |
 | `.template/check.py` | Skill format checker (Python standard library only) |
