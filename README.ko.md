@@ -55,7 +55,7 @@ Claude Code와 함께 개발하기 좋은 프로젝트 기본 세팅(CI, 검사 
 | 경로 | 역할 |
 |---|---|
 | `.claude/skills/groundwork/SKILL.md` | 스킬 본문 |
-| `.claude/skills/auto-test/`, `.claude/commands/generate-tests.md`, `.claude/agents/test-writer.md` | 테스트 생성 도구. 테스트가 없는 코드에 테스트를 제안하고 `/generate-tests <경로>`로 테스트 파일을 만든다. [test-generator](https://github.com/a-abdellatif98/test-generator)(MIT)에서 훅을 빼고 가져옴. 새 저장소에도 남음 |
+| `.claude/skills/auto-test/`, `.claude/commands/generate-tests.md`, `.claude/agents/test-writer.md` | 테스트 생성 도구. 테스트가 없는 코드에 테스트를 제안하고 `/generate-tests <경로>`로 테스트 파일을 만든다. 만든 테스트는 조용한 검사 명령으로 실행해 확인한다. [test-generator](https://github.com/a-abdellatif98/test-generator)(MIT)에서 훅을 빼고 고쳐서 가져옴. 인터뷰에서 명령으로만(추천) / 자동 제안까지 / 넣지 않기 중에 고른다 |
 | `.claude/THIRD_PARTY_NOTICES.md` | 가져온 파일의 출처와 라이선스 |
 | `CLAUDE.md` | 템플릿으로 만든 저장소용 임시 규칙. 첫 변경 요청 전에 `/groundwork` 실행을 한 번 제안하고, 브랜치 작업과 승인 후 병합을 지키게 한다. 세팅할 때 교체됨 |
 | `.template/MANIFEST` | 새 저장소에서 정리할 템플릿 전용 파일 목록 |

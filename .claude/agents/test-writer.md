@@ -94,6 +94,7 @@ After writing tests:
 - Ensure imports/requires are correct
 - Verify factory/fixture references exist
 - Confirm mock targets match real interfaces
+- You cannot run tests. The caller (`/generate-tests`) runs the project's check command on the files you wrote, so report every test file path you created
 
 ## Output Format
 
